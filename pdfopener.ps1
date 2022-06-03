@@ -9,8 +9,9 @@
     The path to the folder which contains the pdf files you wish to open
 
 .PARAMETER app
-    Available options: chrome, edge
+    Available options: chrome, edge, app
               default: edge
+              app = uses default app to open pdf
 #>
 
 param (
@@ -40,8 +41,7 @@ foreach ($f in $files){
     switch($app.ToLower()){
      "chrome" { start chrome $filepath; Break }
      "edge"   { start msedge $filepath; Break }
+     "app"    { start $fullpath; Break }
      default  { start msedge $filepath }   
     }
-    
-    #Write-Host $filepath
 }
