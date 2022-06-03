@@ -31,13 +31,20 @@ $folder = Resolve-Path -Path $folder
 # Write-Host $app
 # Write-Host $folder
 
+
+# get all the pdfs in the folder
 $files = Get-ChildItem $folder -Filter *.pdf
 
+# iterate through each pdf
 foreach ($f in $files){
     $fullpath = $f.FullName
+
+    # create the url/path to the pdf -> for browsers
     $filepath = -join("file:///", $fullpath) | 
-                    ForEach-Object { $_ -replace "/", "\" } | 
-                    ForEach-Object { $_ -replace " ", "%20"}
+                    ForEach-Object { $_ -replace "/", "\" } |   # replace / with \"
+                    ForEach-Object { $_ -replace " ", "%20"}    # replace spaces with %20
+    
+    # open the pdf according to argument provided -> else use edge
     switch($app.ToLower()){
      "chrome" { start chrome $filepath; Break }
      "edge"   { start msedge $filepath; Break }
